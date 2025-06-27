@@ -1,0 +1,4 @@
+# Gitignore for simple-api project
+
+# Ignore .gcloud_config directory as it contains sensitive information
+.gcloud_config/
