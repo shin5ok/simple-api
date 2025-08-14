@@ -84,6 +84,14 @@ func hokkaidoHandler(w http.ResponseWriter, r *http.Request) {
 		"白い恋人",
 		"ロイズのチョコレート",
 		"夕張メロン",
+		"花畑牧場の生キャラメル",
+		"六花亭のマルセイバターサンド",
+		"とうもろこし",
+		"じゃがいも",
+		"カニ",
+		"ホッケの開き",
+		"松前漬け",
+		"いかめし",
 	}
 	w.Write([]byte(meibutsu[rand.Intn(len(meibutsu))]))
 }
