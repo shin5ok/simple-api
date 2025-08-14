@@ -108,3 +108,39 @@ func TestHokkaidoHandler(t *testing.T) {
 		t.Errorf("handler returned unexpected body: got %v", rr.Body.String())
 	}
 }
+
+func TestFukuokaHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/fukuoka", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(fukuokaHandler)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	// Check if the response body is one of the expected values.
+	meibutsu := []string{
+		"博多ラーメン",
+		"もつ鍋",
+		"水炊き",
+		"明太子",
+		"通りもん",
+	}
+	found := false
+	for _, m := range meibutsu {
+		if rr.Body.String() == m {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("handler returned unexpected body: got %v", rr.Body.String())
+	}
+}

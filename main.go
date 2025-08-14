@@ -61,6 +61,7 @@ func main() {
 		w.Write(b)
 	})
 	r.Get("/hokkaido", hokkaidoHandler)
+	r.Get("/fukuoka", fukuokaHandler)
 
 	log.Printf("Listening on port %s", port)
 	if err := http.ListenAndServe(":"+port, r); err != nil {
@@ -92,6 +93,17 @@ func hokkaidoHandler(w http.ResponseWriter, r *http.Request) {
 		"ホッケの開き",
 		"松前漬け",
 		"いかめし",
+	}
+	w.Write([]byte(meibutsu[rand.Intn(len(meibutsu))]))
+}
+
+func fukuokaHandler(w http.ResponseWriter, r *http.Request) {
+	meibutsu := []string{
+		"博多ラーメン",
+		"もつ鍋",
+		"水炊き",
+		"明太子",
+		"通りもん",
 	}
 	w.Write([]byte(meibutsu[rand.Intn(len(meibutsu))]))
 }
