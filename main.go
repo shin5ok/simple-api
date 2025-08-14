@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -17,6 +19,8 @@ type EnvResponse struct {
 }
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -56,9 +60,30 @@ func main() {
 		}
 		w.Write(b)
 	})
+	r.Get("/hokkaido", hokkaidoHandler)
 
 	log.Printf("Listening on port %s", port)
 	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func hokkaidoHandler(w http.ResponseWriter, r *http.Request) {
+	meibutsu := []string{
+		"ジンギスカン",
+		"札幌ラーメン",
+		"函館ラーメン",
+		"旭川ラーメン",
+		"スープカレー",
+		"石狩鍋",
+		"ちゃんちゃん焼き",
+		"うに丼",
+		"いくら丼",
+		"豚丼",
+		"ザンギ",
+		"白い恋人",
+		"ロイズのチョコレート",
+		"夕張メロン",
+	}
+	w.Write([]byte(meibutsu[rand.Intn(len(meibutsu))]))
 }
